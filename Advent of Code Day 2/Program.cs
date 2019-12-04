@@ -13,25 +13,74 @@ namespace Advent_of_Code_Day_2
 
             // [0,1,2,3] position 0 = 1 = add, 2 = multiply, 99 = end; 1 and 2 = postion of numbers to calculate. 3 = location to store.
 
-            for(int i = 0; i < myArray.Length; i += 4)
+            /*for (int i = 0; i < myArray.Length; i += 4)
             {
+                //Part 1
                 if (myArray[i] == 99)
                     break;
                 var valOne = myArray[i + 1];
                 var valTwo = myArray[i + 2];
                 var resultLocation = myArray[i + 3];
-                if(myArray[i] == 1)
+                if (myArray[i] == 1)
                 {
                     myArray[resultLocation] = myArray[valOne] + myArray[valTwo];
-                } 
-                else if(myArray[i] == 2)
+                }
+                else if (myArray[i] == 2)
                 {
                     myArray[resultLocation] = myArray[valOne] * myArray[valTwo];
                 }
+            }*/
+
+            Console.WriteLine("Result is " + CalculateValue(12,2));
+
+            //Part 2
+            myArray = GetArray();
+
+            myArray[1] = 12;
+            myArray[2] = 2;
+            
+
+            for (int noun = 0; noun < 100; noun++)
+            {
+                for (int verb = 0; verb < 100; verb++)
+                {
+                    if(CalculateValue(noun, verb) == 19690720)
+                    {
+                        Console.WriteLine($"{100 * noun + verb }");
+                    }
+
+                }
+
             }
-            Console.WriteLine("Result is " + myArray[0]);
 
         }
+
+        private static int CalculateValue(int noun, int verb)
+        {
+
+            var myArray = GetArray();
+            myArray[1] = noun;
+            myArray[2] = verb;
+            var myPos = 0;
+
+            while (myArray[myPos] != 99)
+            {
+
+                if (myArray[myPos] == 1)
+                {
+                    myArray[myArray[myPos+3]] = myArray[myArray[myPos + 1]] + myArray[myArray[myPos + 2]];
+                }
+                if (myArray[myPos] == 2)
+                {
+                    myArray[myArray[myPos + 3]] = myArray[myArray[myPos + 1]] * myArray[myArray[myPos + 2]];
+                }
+                myPos += 4;
+
+            }
+            return myArray[0];
+
+        }
+
 
         public static int[] GetArray()
         {
